@@ -17,7 +17,13 @@ var svgNSID = "http://www.w3.org/2000/svg";
 
 var startButton = document.getElementById("startButton");
 
-function setupBall(){
+var clear = function(){
+    while (fakeCanvas.lastChild)
+	fakeCanvas.removeChild(fakeCanvas.lastChild);
+};
+
+var startGame = function(e){
+    e.preventDefault();
     // setup ball
     var ball = document.createElementNS( svgNSID, "circle" );
     var cx = width/2;
@@ -31,9 +37,7 @@ function setupBall(){
     ball.setAttribute( "fill", "gray" );
     ball.setAttribute( "stroke", "black" );
     fakeCanvas.appendChild( ball );
-};
 
-function setupPin(){
     // setup pin
     var pin = document.createElementNS( svgNSID, "rect" );
     var pinHeight = 100;
@@ -49,24 +53,14 @@ function setupPin(){
     pin.setAttribute( "height", pinHeight );
     pin.setAttribute( "fill", "red" );
     pin.setAttribute( "stroke", "black" );
+    pin.setAttribute( "transform", "rotate(45,350,350)" );
     fakeCanvas.appendChild( pin );
-};
-
-var clear = function(){
-    while (fakeCanvas.lastChild)
-	fakeCanvas.removeChild(fakeCanvas.lastChild);
-};
-
-var startGame = function(e){
-    e.preventDefault();
-    // setup
-    setupBall();
-    setupPin();
 
     // rotation
-    var animateCode(){
+    var animateCode = function(){
 	
     };
 };
+
 
 startButton.addEventListener( "click", startGame );
