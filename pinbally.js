@@ -22,6 +22,30 @@ var clear = function(){
 	fakeCanvas.removeChild(fakeCanvas.lastChild);
 };
 
+var pinNum = 0;
+
+function setupPin(){
+    // setup pin
+    var pin = document.createElementNS( svgNSID, "rect" );
+    var pinHeight = 100;
+    var pinWidth = 10;
+    var ball = document.getElementById("ball");
+    var cx = parseInt(ball.getAttribute("cx"));
+    var cy = parseInt(ball.getAttribute("cy"));
+    var radius = parseInt(ball.getAttribute("r"));
+
+    pin.setAttribute( "id", "pin"+pinNum );
+    pin.setAttribute( "x", cx-(pinWidth/2) );
+    pin.setAttribute( "y", cy+radius+100 );
+    pin.setAttribute( "width", pinWidth );
+    pin.setAttribute( "height", pinHeight );
+    pin.setAttribute( "fill", "red" );
+    pin.setAttribute( "stroke", "black" );
+    pin.setAttribute( "transform", "rotate(45,350,350)" );
+    fakeCanvas.appendChild( pin );
+    pinNum+= 1;
+};
+
 var startGame = function(e){
     e.preventDefault();
     // setup ball
@@ -38,24 +62,8 @@ var startGame = function(e){
     ball.setAttribute( "stroke", "black" );
     fakeCanvas.appendChild( ball );
 
-    // setup pin
-    var pin = document.createElementNS( svgNSID, "rect" );
-    var pinHeight = 100;
-    var pinWidth = 10;
-    var ball = document.getElementById("ball");
-    var cx = parseInt(ball.getAttribute("cx"));
-    var cy = parseInt(ball.getAttribute("cy"));
-    var radius = parseInt(ball.getAttribute("r"));
-
-    pin.setAttribute( "x", cx-(pinWidth/2) );
-    pin.setAttribute( "y", cy+radius+100 );
-    pin.setAttribute( "width", pinWidth );
-    pin.setAttribute( "height", pinHeight );
-    pin.setAttribute( "fill", "red" );
-    pin.setAttribute( "stroke", "black" );
-    pin.setAttribute( "transform", "rotate(45,350,350)" );
-    fakeCanvas.appendChild( pin );
-
+    setupPin();
+    
     // rotation
     var animateCode = function(){
 	
