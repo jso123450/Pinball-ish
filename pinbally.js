@@ -34,7 +34,7 @@ function setupPin(){
     var cy = parseInt(ball.getAttribute("cy"));
     var radius = parseInt(ball.getAttribute("r"));
 
-    pin.setAttribute( "id", "pin"+pinNum );
+    
     pin.setAttribute( "x", cx-(pinWidth/2) );
     pin.setAttribute( "y", cy+radius );
     pin.setAttribute( "width", pinWidth );
@@ -42,15 +42,18 @@ function setupPin(){
     pin.setAttribute( "fill", "red" );
     pin.setAttribute( "stroke", "black" );
     var rotate = (Math.random() * 360); 
+    pin.setAttribute( "id", rotate );
     pin.setAttribute( "transform", "rotate(" + rotate + ",350,350)" );
     fakeCanvas.appendChild( pin );
     pinNum+= 1;
 };
 
+
 var startGame = function(e){
     e.preventDefault();
     // setup ball
     //TODO clear
+    clear();
     var ball = document.createElementNS( svgNSID, "circle" );
     var cx = width/2;
     var cy = height/2;
@@ -67,14 +70,23 @@ var startGame = function(e){
     for(var i = 0; i <  Math.random() * 150; i++)
 	setupPin();
     
-    for (var kiddies in fakeCanvas.children){
-	kiddies.setAttribute( "transform", "rotate(5,350,350)" );
-    }
-
-    // rotation
+   
     var animateCode = function(){
+	console.log("animating");
+
+	 for (var kiddie in fakeCanvas.children){
+	     console.log(kiddie);
+	     
+	     var pin = fakeCanvas.children[kiddie];
+	     console.log(pin);
+	     pin.setAttribute( "transform", "rotate(" + pin.getAttribute("id") + 5 + ",350,350)" );
+	     pin.setAttribute("id") =int( pin.getAttribute("id"))  + 5;
+	 }
 	
+	// rotation
     };
+    var intervalId = window.setInterval(animateCode, 16);
+    
 };
 
 
