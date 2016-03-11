@@ -10,12 +10,14 @@ var fakeCanvas = document.getElementById("fakeCanvas");
 var width = fakeCanvas.getAttribute("width");
 var height = fakeCanvas.getAttribute("height");
 
-var intervalID;
+var intervalId;
 var svgNSID = "http://www.w3.org/2000/svg";
 
 // startGame
 
 var startButton = document.getElementById("startButton");
+var stopButton = document.getElementById("stopButton");
+
 
 var clear = function(){
     while (fakeCanvas.lastChild)
@@ -84,9 +86,14 @@ var startGame = function(e){
 	
 	// rotation
     };
-    var intervalId = window.setInterval(animateCode, 60);
-    
+    var intervalId = window.setInterval(animateCode, 60
+};
+
+var stop = function(){
+    window.clearInterval(intervalId);
 };
 
 
+
 startButton.addEventListener( "click", startGame );
+stopButton.addEventListener("click", stop );
