@@ -34,7 +34,6 @@ function setupPin(){
     var cy = parseInt(ball.getAttribute("cy"));
     var radius = parseInt(ball.getAttribute("r"));
 
-    
     pin.setAttribute( "x", cx-(pinWidth/2) );
     pin.setAttribute( "y", cy+radius );
     pin.setAttribute( "width", pinWidth );
@@ -79,8 +78,8 @@ var startGame = function(e){
 	     
 	     var pin = fakeCanvas.children[kiddie];
 	     console.log(pin);
-	     pin.setAttribute( "transform", "rotate(" + pin.getAttribute("id") + 5 + ",350,350)" );
-	     pin.setAttribute("id") =int( pin.getAttribute("id"))  + 5;
+	     pin.setAttribute( "transform", "rotate(" + parseInt(pin.getAttribute("id")) + 5 + ",350,350)" );
+	     pin.setAttribute("id", parseInt( pin.getAttribute("id"))  + 5);
 	 }
 	
 	// rotation
