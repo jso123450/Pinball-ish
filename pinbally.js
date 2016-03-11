@@ -78,13 +78,13 @@ var startGame = function(e){
 	     
 	     var pin = fakeCanvas.children[kiddie];
 	     console.log(pin);
-	     pin.setAttribute( "transform", "rotate(" + parseInt(pin.getAttribute("id")) + 5 + ",350,350)" );
-	     pin.setAttribute("id", parseInt( pin.getAttribute("id"))  + 5);
+	     pin.setAttribute( "transform", "rotate(" + parseInt(pin.getAttribute("id")) + 1 + ",350,350)" );
+	     pin.setAttribute("id", parseInt( pin.getAttribute("id"))  + 1);
 	 }
 	
 	// rotation
     };
-    var intervalId = window.setInterval(animateCode, 16);
+    var intervalId = window.setInterval(animateCode, 60);
     
 };
 
