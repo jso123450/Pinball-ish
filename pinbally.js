@@ -1,6 +1,6 @@
-/* ----------------- JAVASCRIPT ----------------- */
+/* ----------------- CHECK JS ----------------- */
 
-console.log("Hello!@!@! I'm Pinball");
+console.log("Hello!@!@! I'm Pinball!");
 
 /* ----------------- PINBALLY ----------------- */
 
@@ -10,19 +10,21 @@ var fakeCanvas = document.getElementById("fakeCanvas");
 var width = fakeCanvas.getAttribute("width");
 var height = fakeCanvas.getAttribute("height");
 
-var intervalId;
+var intervalID;
 var svgNSID = "http://www.w3.org/2000/svg";
 
-// startGame
-
+// Buttons
 var startButton = document.getElementById("startButton");
 var stopButton = document.getElementById("stopButton");
+var clearButton = document.getElementById("clearButton");
 
-
-var clear = function(){
+// Clearing the SVG "canvas"
+function clear(){
     while (fakeCanvas.lastChild)
 	fakeCanvas.removeChild(fakeCanvas.lastChild);
 };
+
+clearButton.addEventListener( "click", clear() );
 
 var pinNum = 0;
 
@@ -52,8 +54,6 @@ function setupPin(){
 
 var startGame = function(e){
     e.preventDefault();
-    // setup ball
-    //TODO clear
     clear();
     var ball = document.createElementNS( svgNSID, "circle" );
     var cx = width/2;
@@ -73,24 +73,20 @@ var startGame = function(e){
     
    
     var animateCode = function(){
-	console.log("animating");
-
-	 for (var kiddie in fakeCanvas.children){
-	     console.log(kiddie);
-	     
-	     var pin = fakeCanvas.children[kiddie];
-	     console.log(pin);
-	     pin.setAttribute( "transform", "rotate(" + parseInt(pin.getAttribute("id")) + 1 + ",350,350)" );
-	     pin.setAttribute("id", parseInt( pin.getAttribute("id"))  + 1);
-	 }
-	
-	// rotation
+	length = fakeCanvas.children.length;
+	// skip over the 0th index because it is the ball
+	for (i = 1; i < length; i++){
+	    pin = fakeCanvas.children[i]
+	    pin.setAttribute( "transform", "rotate(" + parseInt(pin.getAttribute("id")) + 1 + ",350,350)" );
+	    pin.setAttribute("id", parseInt( pin.getAttribute("id"))  + 1);
+	    //pin.setAttribute( "x", 
+	}
     };
-    intervalId = window.setInterval(animateCode, 60);
+    intervalID = window.setInterval(animateCode, 60);
 };
 
 var stop = function(){
-    window.clearInterval(intervalId);
+    window.clearInterval(intervalID);
 };
 
 var clicked = function(e){
@@ -98,10 +94,24 @@ var clicked = function(e){
     x = e.offsetX;
     y = e.offsetY;
 
-    var inBounds = function(mx, my){
-	for(var kiddie in fakeCanvas.children){
-	    var pin = fakeCanvas.children[kiddie];
-	    console.log(mx + " " + my);
+    var inBounds = function(mx,my){
+	for (var index in fakeCanvas.children){
+	    var pin = fakeCanvas.children[index];
+	    /* HOW TO DO MATH ??? 
+	    var pinWidth = pin.getAttribute("width");
+	    var pinHeight = pin.getAttribute("height");
+	    var x = pin.getAttribute("x");
+	    var y = pin.getAttribute("y");
+	    var rotation_angle = parseInt(pin.getAttribute("id"));
+	    var actualX = (x - 350) * Math.cos(rotation_angle) - (y - 350) * Math.sin(rotation_angle) + 350;
+	    var actualY = (x - 350) * Math.sin(rotation_angle) - (y - 350) * Math.cos(rotation_angle) + 350;
+	    if ((mx >= (actualX - pinWidth)) && (mx <= (actualX + pinWidth))){
+		if ( (my >= (actualY - pinHeight)) && (my <= (actualY + pinHeight))){
+		    pin.remove();
+		    pinNum-= 1;
+		} 
+	    }
+	    */
 	    if( mx >= pin.getAttribute("x") && mx <= pin.getAttribute("x") + pin.getAttribute("width")){
 		if (my >= pin.getAttribute("y") && my <= pin.getAttribute("y") + pin.getAttribute("height")){
 		    pin.remove();
