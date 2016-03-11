@@ -86,14 +86,34 @@ var startGame = function(e){
 	
 	// rotation
     };
-    var intervalId = window.setInterval(animateCode, 60
+    intervalId = window.setInterval(animateCode, 60);
 };
 
 var stop = function(){
     window.clearInterval(intervalId);
 };
 
+var clicked = function(e){
+    e.preventDefault();
+    x = e.offsetX;
+    y = e.offsetY;
+
+    var inBounds = function(mx, my){
+	for(var kiddie in fakeCanvas.children){
+	    var pin = fakeCanvas.children[kiddie];
+	    console.log(mx + " " + my);
+	    if( mx >= pin.getAttribute("x") && mx <= pin.getAttribute("x") + pin.getAttribute("width")){
+		if (my >= pin.getAttribute("y") && my <= pin.getAttribute("y") + pin.getAttribute("height")){
+		    pin.remove();
+		} 
+	    }
+	}
+    };
+
+    inBounds(x, y);
+}	
 
 
 startButton.addEventListener( "click", startGame );
-stopButton.addEventListener("click", stop );
+stopButton.addEventListener( "click", stop );
+fakeCanvas.addEventListener( "click", clicked );
